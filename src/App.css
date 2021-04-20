@@ -1,0 +1,31 @@
+/*.App {*/
+/*  padding: 30px;*/
+/*  display: flex;*/
+/*}*/
+/*li {*/
+/*  list-style: none;*/
+/*}*/
+
+/*.App > div {*/
+/*  margin-right: 50px;*/
+/*}*/
+
+/*.active-filter {*/
+/*  background-color: orange;*/
+/*}*/
+
+.btn-remove {
+  background-color: darkseagreen;
+}
+
+.error {
+  border: 2px solid red;
+  outline: transparent;
+}
+
+.error-message {
+  color: red;
+}
+
+
+
