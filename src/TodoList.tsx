@@ -1,4 +1,4 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
+import React, {ChangeEvent} from 'react';
 import {FilterValuesType, TaskType} from './App';
 import AddItemForm from './AddItemForm';
 import EditableSpan from './EditableSpan';
@@ -28,16 +28,14 @@ function TodoList(props: TodoListPropsType) {
         const changeTaskTitle = (title: string) => props.changeTaskTitle(t.id, title, props.id);
         return (
             <li key={t.id}>
-                {/*<input type="checkbox" checked={t.isDone} onChange={changeStatus}/>*/}
                 <Checkbox checked={t.isDone} onChange={changeStatus} color={'primary'}/>
                 <EditableSpan title={t.title} changeTitle={changeTaskTitle}/>
                 <IconButton onClick={removeTask}>
-                    <Delete />
+                    <Delete/>
                 </IconButton>
             </li>
         );
     });
-
 
     const addTask = (title: string) => {
         props.addTask(title, props.id);
@@ -51,14 +49,10 @@ function TodoList(props: TodoListPropsType) {
     const setActiveFilterValue = () => props.changeFilterValue('Active', props.id);
     const setCompletedFilterValue = () => props.changeFilterValue('Completed', props.id);
 
-    const allBtnClass = props.todoListFilter === 'All' ? 'active-filter' : '';
-    const activeBtnClass = props.todoListFilter === 'Active' ? 'active-filter' : '';
-    const completedBtnClass = props.todoListFilter === 'Completed' ? 'active-filter' : '';
 
     const styleButton = {
         marginRight: '5px'
-    }
-
+    };
 
     return (
         <div>
@@ -79,21 +73,18 @@ function TodoList(props: TodoListPropsType) {
                     size={'small'}
                     color={'primary'}
                     variant={props.todoListFilter === 'All' ? 'outlined' : 'contained'}
-                    //className={allBtnClass}
                     onClick={setAllFilterValue}>All</Button>
                 <Button
                     style={styleButton}
                     size={'small'}
                     color={'primary'}
                     variant={props.todoListFilter === 'Active' ? 'outlined' : 'contained'}
-                    //className={activeBtnClass}
                     onClick={setActiveFilterValue}>Active</Button>
                 <Button
                     style={styleButton}
                     size={'small'}
                     color={'primary'}
                     variant={props.todoListFilter === 'Completed' ? 'outlined' : 'contained'}
-                    //className={completedBtnClass}
                     onClick={setCompletedFilterValue}>Completed</Button>
             </div>
         </div>
