@@ -1,9 +1,12 @@
 import React, {ChangeEvent} from 'react';
-import {FilterValuesType, TaskType} from './App';
+import {FilterValuesType, TaskType} from './AppWithRedux';
 import AddItemForm from './AddItemForm';
 import EditableSpan from './EditableSpan';
 import {Button, Checkbox, IconButton} from '@material-ui/core';
 import {Delete} from '@material-ui/icons';
+import {useDispatch, useSelector} from 'react-redux';
+import {AppRootStateType} from './state/store';
+import {TodoListType} from './AppWithRedux';
 
 type TodoListPropsType = {
     id: string
@@ -21,6 +24,11 @@ type TodoListPropsType = {
 
 
 function TodoList(props: TodoListPropsType) {
+
+    // const todolist = useSelector<AppRootStateType, TodoListType>(state => state.todolists.filter(el => el.id === props.id)[0]);
+    // const tasks = useSelector<AppRootStateType, TaskType[]>(state => state.tasks[props.id]);
+    //
+    // const dispatch = useDispatch();
 
     const tasks = props.tasks.map(t => {
         const removeTask = () => props.removeTask(t.id, props.id);
@@ -42,9 +50,7 @@ function TodoList(props: TodoListPropsType) {
     }
 
     const removeTodoList = () => props.removeTodoList(props.id);
-
     const changeTodoListTitle = (title: string) => props.changeTodoListTitle(title, props.id);
-
     const setAllFilterValue = () => props.changeFilterValue('All', props.id);
     const setActiveFilterValue = () => props.changeFilterValue('Active', props.id);
     const setCompletedFilterValue = () => props.changeFilterValue('Completed', props.id);
