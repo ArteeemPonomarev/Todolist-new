@@ -163,4 +163,5 @@
 //     );
 // }
 //
-// export default App;
+export let a = 1;
+

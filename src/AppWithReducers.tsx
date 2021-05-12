@@ -142,3 +142,4 @@
 // }
 //
 // export default AppWithReducers;
+export let b = 1;
