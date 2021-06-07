@@ -6,35 +6,22 @@ import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography}
 import {Menu} from '@material-ui/icons';
 import {
     addTodolistAC,
-    changeTodoListFilterAC, changeTodoListTitleAC,
-    removeTodolistAC,
+    changeTodoListFilterAC, changeTodoListTitleAC, FilterValuesType,
+    removeTodolistAC, TodolistDomainType,
 } from './state/todolists-reducer';
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from './state/tasks-reducer';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from './state/store';
+import {TaskStatuses, TaskType} from './api/todolist-api';
 
-export type TaskType = {
-    id: string
-    title: string
-    isDone: boolean
-};
-
-export type FilterValuesType = 'All' | 'Active' | 'Completed';
-
-export type TodoListType = {
-    id: string
-    title: string
-    filter: FilterValuesType
-}
 
 export type TasksStateType = {
     [key: string]: Array<TaskType>
 }
 
-
 function AppWithRedux() {
 
-    const todoLists = useSelector<AppRootStateType, Array<TodoListType>>(state => state.todolists)
+    const todoLists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolists)
     const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
 
     const dispatch = useDispatch();
@@ -47,8 +34,8 @@ function AppWithRedux() {
         dispatch(addTaskAC(title, todoListID))
     }, [dispatch])
 
-    const changeTaskStatus = useCallback((taskId: string, newIsDoneValue: boolean, todoListID: string) => {
-        dispatch(changeTaskStatusAC(taskId, newIsDoneValue, todoListID))
+    const changeTaskStatus = useCallback((taskId: string, status: TaskStatuses, todoListID: string) => {
+        dispatch(changeTaskStatusAC(taskId, status, todoListID))
     }, [dispatch])
 
     const changeTaskTitle = useCallback((taskId: string, title: string, todoListID: string) => {

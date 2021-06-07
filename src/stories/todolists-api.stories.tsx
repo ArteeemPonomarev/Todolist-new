@@ -100,7 +100,7 @@ export const DeleteTask = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
         const todolistId = '3c71d1e5-ab31-48aa-8b10-313686ebb882';
-        const taskId = "2d9d58fd-5922-4e5f-a1d8-b921e6fbd81d";
+        const taskId = '2d9d58fd-5922-4e5f-a1d8-b921e6fbd81d';
         todoApi.deleteTask(todolistId, taskId)
             .then((res) => {
                 setState(res.data);
@@ -114,14 +114,14 @@ export const UpdateTask = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
         const todolistId = '3c71d1e5-ab31-48aa-8b10-313686ebb882';
-        const taskId = "a9951d0d-304a-44cd-a4b0-ef9ba3a72f74";
+        const taskId = 'a9951d0d-304a-44cd-a4b0-ef9ba3a72f74';
         const model = {
             title: 'React-Redux',
-            description: null,
+            description: '',
             status: 0,
             priority: 1,
-            startDate: null,
-            deadline: null
+            startDate: '',
+            deadline: ''
         }
         todoApi.updateTask(todolistId, taskId, model)
             .then((res) => {

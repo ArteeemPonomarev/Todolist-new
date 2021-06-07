@@ -38,16 +38,16 @@ export enum TaskPriorities {
 }
 
 
-type UpdateTaskModelType = {
+export type UpdateTaskModelType = {
     title: string
-    description: string | null
+    description: string
     status: number
     priority: number
-    startDate: string | null
-    deadline: string | null
+    startDate: string
+    deadline: string
 }
 
-type TaskType = {
+export type TaskType = {
     description: string
     title: string
     status: TaskStatuses
