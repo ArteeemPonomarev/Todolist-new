@@ -32,21 +32,9 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
                 [action.todolistId]: state[action.todolistId].filter(task => task.id !== action.taskId)
             }
         case 'ADD_TASK':
-            let newTask: TaskType = {
-                id: v1(),
-                title: action.title,
-                status: TaskStatuses.New,
-                todoListId: action.todolistId,
-                startDate: '',
-                addedDate: '',
-                order: 0,
-                priority: TaskPriorities.Low,
-                deadline: '',
-                description: ''
-            }
             return {
                 ...state,
-                [action.todolistId]: [newTask, ...state[action.todolistId]]
+                [action.todolistId]: [action.task, ...state[action.todolistId]]
             }
         case 'CHANGE_TASK_STATUS':
             let tasksWithNewStatus = state[action.todolistId].map(t => t.id === action.taskId ? {
@@ -89,11 +77,11 @@ export const removeTaskAC = (taskId: string, todolistId: string) => {
 }
 
 
-export const addTaskAC = (title: string, todolistId: string) => {
+export const addTaskAC = (task: TaskType, todolistId: string) => {
     return {
         type: 'ADD_TASK',
         todolistId,
-        title
+        task
     } as const
 }
 
@@ -142,6 +130,6 @@ export const removeTaskTC = (todolistId: string, taskId: string) => (dispatch: D
 export const createTaskTC = (todolistId: string, title: string) => (dispatch: Dispatch) => {
     todoApi.createTask(todolistId, title)
         .then(res => {
-            dispatch(addTaskAC(title,todolistId))
+            dispatch(addTaskAC(res.data.data.item,todolistId))
         })
 }
