@@ -6,21 +6,22 @@ import {combineReducers, createStore} from 'redux';
 import {tasksReducer} from '../features/TodolistsList/tasks-reducer';
 import {todolistsReducer} from '../features/TodolistsList/todolists-reducer';
 import {TaskPriorities, TaskStatuses} from '../api/todolist-api';
+import {RequestStatusType} from '../app/app-reducer';
 
 const rootReducer = combineReducers({
     tasks: tasksReducer,
     todolists: todolistsReducer
 })
 
-const initialGlobalState = {
+const initialGlobalState: AppRootStateType = {
     todolists: [
         {
             id: 'todolistId1', title: 'What to learn', filter: 'All', addedDate: '',
-            order: 1
+            order: 1, entityStatus: 'idle'
         },
         {
             id: 'todolistId2', title: 'What to buy', filter: 'All', addedDate: '',
-            order: 0
+            order: 0, entityStatus: 'idle'
         }
     ],
     tasks: {
@@ -76,10 +77,11 @@ const initialGlobalState = {
                 priority: TaskPriorities.Low
             }
         ]
-    }
+    },
+    app: {status: 'succeeded', error:  'error'}
 };
 
-export const storyBookStore = createStore(rootReducer, initialGlobalState as AppRootStateType);
+export const storyBookStore = createStore(rootReducer, initialGlobalState);
 
 
 export const ReduxStoreProviderDecorator = (storyFn: () => React.ReactNode) => {

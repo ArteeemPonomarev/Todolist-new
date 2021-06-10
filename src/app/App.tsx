@@ -4,9 +4,13 @@ import {AddItemForm} from '../components/AddItemForm/AddItemForm';
 import {AppBar, Button, Container, Grid, IconButton, Toolbar, Typography} from '@material-ui/core';
 import {Menu} from '@material-ui/icons';
 import {createTodolistTC,} from '../features/TodolistsList/todolists-reducer';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {TaskType} from '../api/todolist-api';
 import {TodolistsList} from '../features/TodolistsList/ToodolistsList';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import {AppRootStateType} from './store';
+import {RequestStatusType} from './app-reducer';
+import {ErrorSnackbar} from '../components/ErrorSnackBar/ErrorSnackBar';
 
 
 
@@ -21,8 +25,11 @@ function App() {
         dispatch(createTodolistTC(title));
     }, [dispatch])
 
+    const error = useSelector<AppRootStateType, RequestStatusType>((state) => state.app.status)
+
     return (
         <div className="App">
+            <ErrorSnackbar/>
             <AppBar position="static">
                 <Toolbar style={{display: 'flex', justifyContent: 'space-between'}}>
                     <IconButton edge="start" color="inherit" aria-label="menu">
@@ -33,6 +40,7 @@ function App() {
                     </Typography>
                     <Button variant={'outlined'} color="inherit">Login</Button>
                 </Toolbar>
+                {error === 'loading' && <LinearProgress color={"secondary"}/>}
             </AppBar>
             <Container fixed style={{padding: '20px 0px'}}>
                 <Grid container style={{padding: '20px 0px'}}>
