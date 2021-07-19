@@ -21,7 +21,8 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
         case 'REMOVE_TASK':
             return {...state, [action.todolistId]: state[action.todolistId].filter(t => t.id !== action.taskId)}
         case 'ADD_TASK':
-            return {...state, [action.todolistId]: [action.task, ...state[action.todolistId]]}
+            const newTask = action.task
+            return {...state, [newTask.todoListId]: [newTask, ...state[newTask.todoListId]]}
         case 'UPDATE_TASK':
             return {
                 ...state,
@@ -43,8 +44,8 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
 //ActionCreators
 export const removeTaskAC = (taskId: string, todolistId: string) =>
     ({type: 'REMOVE_TASK', taskId, todolistId} as const)
-export const addTaskAC = (task: TaskType, todolistId: string) =>
-    ({type: 'ADD_TASK', todolistId, task} as const)
+export const addTaskAC = (task: TaskType) =>
+    ({type: 'ADD_TASK', task} as const)
 export const updateTaskAC = (taskId: string, model: UpdateDomainTaskModelType, todolistId: string) =>
     ({type: 'UPDATE_TASK', model, taskId, todolistId} as const)
 export const setTasksAC = (tasks: Array<TaskType>, todolistId: string) =>
@@ -61,7 +62,8 @@ export const fetchTasksTC = (todolistId: string) => (dispatch: Dispatch<ActionsT
 
         })
 }
-export const removeTaskTC = (todolistId: string, taskId: string) => (dispatch: Dispatch<ActionsType | SetAppStatusType>) => {
+export const removeTaskTC = (todolistId: string, taskId: string) =>
+    (dispatch: Dispatch<ActionsType | SetAppStatusType>) => {
     dispatch(setAppStatusAC('loading'))
     todoApi.deleteTask(todolistId, taskId)
         .then(() => {
@@ -69,13 +71,14 @@ export const removeTaskTC = (todolistId: string, taskId: string) => (dispatch: D
             dispatch(setAppStatusAC('succeeded'))
         })
 }
-export const createTaskTC = (todolistId: string, title: string) => (dispatch: Dispatch<ActionsType | SetAppStatusType | SetAppErrorType>) => {
+export const createTaskTC = (todolistId: string, title: string) =>
+    (dispatch: Dispatch<ActionsType | SetAppStatusType | SetAppErrorType>) => {
     dispatch(setAppStatusAC('loading'))
     todoApi.createTask(todolistId, title)
         .then(res => {
             if (res.data.resultCode === 0 ) {
                 const task = res.data.data.item;
-                dispatch(addTaskAC(task, todolistId))
+                dispatch(addTaskAC(task))
                 dispatch(setAppStatusAC('succeeded'))
             } else {
                 if (res.data.messages.length) {
