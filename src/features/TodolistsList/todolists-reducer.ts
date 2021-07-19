@@ -9,7 +9,6 @@ import {
 } from '../../app/app-reducer';
 
 
-
 const initialState: Array<TodolistDomainType> = [];
 
 export const todolistsReducer = (state: Array<TodolistDomainType> = initialState, action: ActionsType): Array<TodolistDomainType> => {
@@ -47,54 +46,58 @@ export const changeTodolistEntityStatusAC = (todolistId: string, entityStatus: R
 
 
 //Thunks
-export const fetchTodolistsTC = () => (dispatch: Dispatch<ActionsType | SetAppStatusType>) => {
-    dispatch(setAppStatusAC('loading'))
-    todoApi.getTodos()
-        .then(res => {
-            dispatch(setTodolistsAC(res.data))
-            dispatch(setAppStatusAC('succeeded'))
-        })
-}
-export const deleteTodolistTC = (todolistId: string) => (dispatch: Dispatch<ActionsType | SetAppStatusType>) => {
-    dispatch(setAppStatusAC('loading'))
-    dispatch(changeTodolistEntityStatusAC(todolistId, 'loading'))
-    todoApi.deleteTodo(todolistId)
-        .then(res => {
-            if (res.data.resultCode === 0) {
-                dispatch(removeTodolistAC(todolistId))
+export const fetchTodolistsTC = () =>
+    (dispatch: Dispatch<ActionsType | SetAppStatusType>) => {
+        dispatch(setAppStatusAC('loading'))
+        todoApi.getTodos()
+            .then(res => {
+                dispatch(setTodolistsAC(res.data))
                 dispatch(setAppStatusAC('succeeded'))
-            }
-        })
-}
-export const createTodolistTC = (title: string) => (dispatch: Dispatch<ActionsType | SetAppStatusType | SetAppErrorType>) => {
-    todoApi.createTodo(title)
-        .then(res => {
-            if (res.data.resultCode === 0) {
-            dispatch(addTodolistAC(title, res.data.data.item))
-                dispatch(setAppStatusAC('succeeded'))
-            } else {
-                if (res.data.messages.length) {
-                    dispatch(setAppErrorAC(res.data.messages[0]))
+            })
+    }
+export const deleteTodolistTC = (todolistId: string) =>
+    (dispatch: Dispatch<ActionsType | SetAppStatusType>) => {
+        dispatch(setAppStatusAC('loading'))
+        dispatch(changeTodolistEntityStatusAC(todolistId, 'loading'))
+        todoApi.deleteTodo(todolistId)
+            .then(res => {
+                if (res.data.resultCode === 0) {
+                    dispatch(removeTodolistAC(todolistId))
+                    dispatch(setAppStatusAC('succeeded'))
                 }
-                dispatch(setAppStatusAC('failed'))
-            }
-        })
-}
-export const updateTodolistTC = (title: string, todolistId: string) => (dispatch: Dispatch<ActionsType | SetAppStatusType | SetAppErrorType>) => {
-    dispatch(setAppStatusAC('loading'))
-    todoApi.updateTodoTitle(todolistId, title)
-        .then((res) => {
-            if (res.data.resultCode === 0) {
-                dispatch(changeTodoListTitleAC(title, todolistId))
-                dispatch(setAppStatusAC('succeeded'))
-            } else {
-                if (res.data.messages.length) {
-                    dispatch(setAppErrorAC(res.data.messages[0]))
+            })
+    }
+export const createTodolistTC = (title: string) =>
+    (dispatch: Dispatch<ActionsType | SetAppStatusType | SetAppErrorType>) => {
+        todoApi.createTodo(title)
+            .then(res => {
+                if (res.data.resultCode === 0) {
+                    dispatch(addTodolistAC(title, res.data.data.item))
+                    dispatch(setAppStatusAC('succeeded'))
+                } else {
+                    if (res.data.messages.length) {
+                        dispatch(setAppErrorAC(res.data.messages[0]))
+                    }
+                    dispatch(setAppStatusAC('failed'))
                 }
-                dispatch(setAppStatusAC('failed'))
-            }
-        })
-}
+            })
+    }
+export const updateTodolistTC = (title: string, todolistId: string) =>
+    (dispatch: Dispatch<ActionsType | SetAppStatusType | SetAppErrorType>) => {
+        dispatch(setAppStatusAC('loading'))
+        todoApi.updateTodoTitle(todolistId, title)
+            .then((res) => {
+                if (res.data.resultCode === 0) {
+                    dispatch(changeTodoListTitleAC(title, todolistId))
+                    dispatch(setAppStatusAC('succeeded'))
+                } else {
+                    if (res.data.messages.length) {
+                        dispatch(setAppErrorAC(res.data.messages[0]))
+                    }
+                    dispatch(setAppStatusAC('failed'))
+                }
+            })
+    }
 
 //types
 export type RemoveTodoListAT = ReturnType<typeof removeTodolistAC>;
