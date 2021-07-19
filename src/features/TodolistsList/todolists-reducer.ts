@@ -82,7 +82,7 @@ export const createTodolistTC = (title: string) =>
                 }
             })
     }
-export const updateTodolistTC = (title: string, todolistId: string) =>
+export const updateTodolistTitleTC = (title: string, todolistId: string) =>
     (dispatch: Dispatch<ActionsType | SetAppStatusType | SetAppErrorType>) => {
         dispatch(setAppStatusAC('loading'))
         todoApi.updateTodoTitle(todolistId, title)

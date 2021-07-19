@@ -5,7 +5,7 @@ import {
     fetchTodolistsTC,
     FilterValuesType,
     TodolistDomainType,
-    updateTodolistTC
+    updateTodolistTitleTC
 } from './todolists-reducer';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from '../../app/store';
@@ -50,7 +50,7 @@ export const TodolistsList: React.FC = () => {
 
 
     const changeTodoListTitle = useCallback((title: string, todoListID: string) => {
-        dispatch(updateTodolistTC(title, todoListID))
+        dispatch(updateTodolistTitleTC(title, todoListID))
     }, [dispatch])
 
     const changeTodoListFilter = useCallback((newFilterValue: FilterValuesType, todoListID: string) => {

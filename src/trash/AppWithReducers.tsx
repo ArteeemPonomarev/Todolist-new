@@ -106,8 +106,20 @@
 //         dispatchToTasks(removeTaskAC(taskID, todoListID))
 //     }
 //
-//     function addTask(title: string, todoListID: string) {
-//         dispatchToTasks(addTaskAC(title, todoListID))
+//     function addTask(title: string, todoListId: string) {
+//         const action = addTaskAC({
+//             id: 'id exist',
+//             status: TaskStatuses.New,
+//             title,
+//             todoListId,
+//             startDate: '',
+//             deadline: '',
+//             addedDate: '',
+//             order: 0,
+//             description: '',
+//             priority: TaskPriorities.Low
+//         })
+//         dispatchToTasks(action)
 //     }
 //
 //     function changeTaskStatus(taskId: string, status: TaskStatuses, todoListID: string) {
@@ -128,7 +140,12 @@
 //     }
 //
 //     function addTodoList(title: string) {
-//         let action = addTodolistAC(title);
+//         let action = addTodolistAC({
+//          id: v1(),
+//          title,
+//          addedDate:'',
+//          order: 0,
+//         });
 //         dispatchToTasks(action);
 //         dispatchToTodoLists(action);
 //     }

@@ -27,7 +27,7 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
             return {
                 ...state,
                 [action.todolistId]: state[action.todolistId]
-                    .map(t => t.id === action.taskId ? {...t, ...action.model} : {...t})
+                    .map(t => t.id === action.taskId ? {...t, ...action.model} : t)
             }
         case 'ADD-TODOLIST':
             return {...state, [action.todolist.id]: []}
@@ -64,36 +64,36 @@ export const fetchTasksTC = (todolistId: string) => (dispatch: Dispatch<ActionsT
 }
 export const removeTaskTC = (todolistId: string, taskId: string) =>
     (dispatch: Dispatch<ActionsType | SetAppStatusType>) => {
-    dispatch(setAppStatusAC('loading'))
-    todoApi.deleteTask(todolistId, taskId)
-        .then(() => {
-            dispatch(removeTaskAC(taskId, todolistId))
-            dispatch(setAppStatusAC('succeeded'))
-        })
-}
+        dispatch(setAppStatusAC('loading'))
+        todoApi.deleteTask(todolistId, taskId)
+            .then(() => {
+                dispatch(removeTaskAC(taskId, todolistId))
+                dispatch(setAppStatusAC('succeeded'))
+            })
+    }
 export const createTaskTC = (todolistId: string, title: string) =>
     (dispatch: Dispatch<ActionsType | SetAppStatusType | SetAppErrorType>) => {
-    dispatch(setAppStatusAC('loading'))
-    todoApi.createTask(todolistId, title)
-        .then(res => {
-            if (res.data.resultCode === 0 ) {
-                const task = res.data.data.item;
-                dispatch(addTaskAC(task))
-                dispatch(setAppStatusAC('succeeded'))
-            } else {
-                if (res.data.messages.length) {
-                    dispatch(setAppErrorAC(res.data.messages[0]))
+        dispatch(setAppStatusAC('loading'))
+        todoApi.createTask(todolistId, title)
+            .then(res => {
+                if (res.data.resultCode === 0) {
+                    const task = res.data.data.item;
+                    dispatch(addTaskAC(task))
+                    dispatch(setAppStatusAC('succeeded'))
                 } else {
-                    dispatch(setAppErrorAC('Some error occurred'))
+                    if (res.data.messages.length) {
+                        dispatch(setAppErrorAC(res.data.messages[0]))
+                    } else {
+                        dispatch(setAppErrorAC('Some error occurred'))
+                    }
+                    dispatch(setAppStatusAC('failed'))
                 }
+            })
+            .catch((error) => {
+                dispatch(setAppErrorAC(error.message))
                 dispatch(setAppStatusAC('failed'))
-            }
-        })
-        .catch((error) => {
-            dispatch(setAppErrorAC(error.message))
-            dispatch(setAppStatusAC('failed'))
-        })
-}
+            })
+    }
 export const updateTaskTC = (todolistId: string, taskId: string, domainModel: UpdateDomainTaskModelType) =>
     (dispatch: Dispatch<ActionsType | SetAppStatusType | SetAppErrorType>, getState: () => AppRootStateType) => {
 
