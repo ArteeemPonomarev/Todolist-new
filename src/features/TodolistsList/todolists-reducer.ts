@@ -69,6 +69,7 @@ export const deleteTodolistTC = (todolistId: string) =>
     }
 export const createTodolistTC = (title: string) =>
     (dispatch: Dispatch<ActionsType | SetAppStatusType | SetAppErrorType>) => {
+        dispatch(setAppStatusAC('loading'))
         todoApi.createTodo(title)
             .then(res => {
                 if (res.data.resultCode === 0) {

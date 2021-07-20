@@ -20,7 +20,7 @@ function App() {
         dispatch(createTodolistTC(title));
     }, [dispatch])
 
-    const error = useSelector<AppRootStateType, RequestStatusType>((state) => state.app.status)
+    const status = useSelector<AppRootStateType, RequestStatusType>((state) => state.app.status)
 
     return (
         <div className="App">
@@ -35,7 +35,7 @@ function App() {
                     </Typography>
                     <Button variant={'outlined'} color="inherit">Login</Button>
                 </Toolbar>
-                {error === 'loading' && <LinearProgress color={"secondary"}/>}
+                {status === 'loading' && <LinearProgress color={"secondary"}/>}
             </AppBar>
             <Container fixed style={{padding: '20px 0px'}}>
                 <Grid container style={{padding: '20px 0px'}}>

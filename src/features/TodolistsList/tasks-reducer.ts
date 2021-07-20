@@ -58,7 +58,6 @@ export const fetchTasksTC = (todolistId: string) => (dispatch: Dispatch<ActionsT
         .then(res => {
             dispatch(setTasksAC(res.data.items, todolistId))
             dispatch(setAppStatusAC('succeeded'))
-
         })
 }
 export const removeTaskTC = (todolistId: string, taskId: string) =>
