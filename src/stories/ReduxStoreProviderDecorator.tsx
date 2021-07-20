@@ -1,16 +1,17 @@
 import React from 'react';
 import {Provider} from 'react-redux';
-import {AppRootStateType, store} from '../app/store';
+import {AppRootStateType} from '../app/store';
 import {v1} from 'uuid';
 import {combineReducers, createStore} from 'redux';
 import {tasksReducer} from '../features/TodolistsList/tasks-reducer';
 import {todolistsReducer} from '../features/TodolistsList/todolists-reducer';
 import {TaskPriorities, TaskStatuses} from '../api/todolist-api';
-import {RequestStatusType} from '../app/app-reducer';
+import {appReducer} from '../app/app-reducer';
 
 const rootReducer = combineReducers({
     tasks: tasksReducer,
-    todolists: todolistsReducer
+    todolists: todolistsReducer,
+    app: appReducer
 })
 
 const initialGlobalState: AppRootStateType = {
@@ -78,7 +79,7 @@ const initialGlobalState: AppRootStateType = {
             }
         ]
     },
-    app: {status: 'succeeded', error:  'error'}
+    app: {status: 'succeeded', error: 'error'}
 };
 
 export const storyBookStore = createStore(rootReducer, initialGlobalState);

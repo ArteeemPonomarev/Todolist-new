@@ -9,13 +9,13 @@ import {
 } from './todolists-reducer';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from '../../app/store';
-import {createTaskTC, removeTaskTC, updateTaskTC} from './tasks-reducer';
+import {createTaskTC, removeTaskTC, TasksStateType, updateTaskTC} from './tasks-reducer';
 import {TaskStatuses} from '../../api/todolist-api';
 import {Grid, Paper} from '@material-ui/core';
 import {TodoList} from './Todolist/TodoList';
-import {TasksStateType} from '../../app/App';
 
-export const TodolistsList: React.FC = () => {
+
+export const TodolistsList = () => {
     useEffect(() => {
         dispatch(fetchTodolistsTC());
     }, [])

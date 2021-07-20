@@ -5,7 +5,6 @@ import {AppBar, Button, Container, Grid, IconButton, Toolbar, Typography} from '
 import {Menu} from '@material-ui/icons';
 import {createTodolistTC,} from '../features/TodolistsList/todolists-reducer';
 import {useDispatch, useSelector} from 'react-redux';
-import {TaskType} from '../api/todolist-api';
 import {TodolistsList} from '../features/TodolistsList/ToodolistsList';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import {AppRootStateType} from './store';
@@ -13,12 +12,8 @@ import {RequestStatusType} from './app-reducer';
 import {ErrorSnackbar} from '../components/ErrorSnackBar/ErrorSnackBar';
 
 
-
-export type TasksStateType = {
-    [key: string]: Array<TaskType>
-}
-
 function App() {
+
     const dispatch = useDispatch();
 
     const addTodoList = useCallback((title: string) => {
