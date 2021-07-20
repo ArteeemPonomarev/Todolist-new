@@ -20,7 +20,7 @@ export const todolistsReducer = (state: Array<TodolistDomainType> = initialState
         case 'REMOVE-TODOLIST':
             return state.filter(tl => tl.id !== action.todoListID)
         case 'ADD-TODOLIST':
-            return [{...action.todolist, filter: 'Active', entityStatus: 'idle'}, ...state]
+            return [{...action.todolist, filter: 'All', entityStatus: 'idle'}, ...state]
         case 'CHANGE-TODOLIST-TITLE':
             return state.map(tl => tl.id === action.todoListID ? {...tl, title: action.title} : tl)
         case  'CHANGE-TODOLIST-FILTER':
@@ -33,8 +33,8 @@ export const todolistsReducer = (state: Array<TodolistDomainType> = initialState
 //Action Creators
 export const removeTodolistAC = (todoListID: string) =>
     ({type: 'REMOVE-TODOLIST', todoListID} as const)
-export const addTodolistAC = (title: string, todolist: TodolistType) =>
-    ({type: 'ADD-TODOLIST', title, todolist} as const)
+export const addTodolistAC = (todolist: TodolistType) =>
+    ({type: 'ADD-TODOLIST', todolist} as const)
 export const changeTodoListTitleAC = (title: string, todoListID: string) =>
     ({type: 'CHANGE-TODOLIST-TITLE', title, todoListID} as const)
 export const changeTodoListFilterAC = (todoListID: string, newFilterValue: FilterValuesType) =>
@@ -72,7 +72,7 @@ export const createTodolistTC = (title: string) =>
         todoApi.createTodo(title)
             .then(res => {
                 if (res.data.resultCode === 0) {
-                    dispatch(addTodolistAC(title, res.data.data.item))
+                    dispatch(addTodolistAC(res.data.data.item))
                     dispatch(setAppStatusAC('succeeded'))
                 } else {
                     if (res.data.messages.length) {

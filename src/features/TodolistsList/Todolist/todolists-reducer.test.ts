@@ -1,4 +1,5 @@
 import {
+    addTodolistAC,
     FilterValuesType,
     removeTodolistAC,
     setTodolistsAC,
@@ -6,6 +7,7 @@ import {
     todolistsReducer
 } from '../todolists-reducer';
 import {v1} from 'uuid';
+import {TodolistType} from "../../../api/todolist-api";
 
 
 let todolistId1: string;
@@ -19,14 +21,30 @@ beforeEach(() => {
     startState = [
         {
             id: todolistId1, title: 'What to learn', filter: 'All', addedDate: '',
-            order: 1,  entityStatus: 'idle'
+            order: 1, entityStatus: 'idle'
         },
         {
             id: todolistId2, title: 'What to buy', filter: 'All', addedDate: '',
-            order: 0,  entityStatus: 'idle'
+            order: 0, entityStatus: 'idle'
         }
     ]
 })
+
+test('correst todolist should be added', () => {
+    const newTodolist: TodolistType = {
+        title: 'New todolist',
+        id: '3',
+        order: 0,
+        addedDate: ''
+    }
+
+    const endState = todolistsReducer(startState, addTodolistAC(newTodolist));
+
+    expect(endState.length).toBe(3);
+    expect(endState[0].title).toBe('New todolist');
+    expect(endState[0].filter).toBe('All')
+})
+
 
 test('correct todolist should be removed', () => {
 

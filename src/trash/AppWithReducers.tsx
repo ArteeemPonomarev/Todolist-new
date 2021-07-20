@@ -1,19 +1,25 @@
 // import React, {useReducer} from 'react';
-// import './App.css';
-// import {TodoList} from './TodoList';
+// import '../app/App.css';
+// import {TodoList} from '../features/TodolistsList/Todolist/TodoList';
 // import {v1} from 'uuid';
-// import {AddItemForm} from './AddItemForm';
+// import {AddItemForm} from '../components/AddItemForm/AddItemForm';
 // import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from '@material-ui/core';
 // import {Menu} from '@material-ui/icons';
 // import {
 //     addTodolistAC,
-//     changeTodoListFilterAC, changeTodoListTitleAC,
+//     changeTodoListFilterAC,
+//     changeTodoListTitleAC,
 //     FilterValuesType,
 //     removeTodolistAC, TodolistDomainType,
 //     todolistsReducer
-// } from './state/todolists-reducer';
-// import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from './state/tasks-reducer';
-// import {TaskPriorities, TaskStatuses, TaskType} from './api/todolist-api';
+// } from '../features/TodolistsList/todolists-reducer';
+// import {
+//     addTaskAC,
+//     removeTaskAC,
+//     tasksReducer,
+//     updateTaskAC,
+// } from '../features/TodolistsList/tasks-reducer';
+// import {TaskPriorities, TaskStatuses, TaskType} from "../api/todolist-api";
 //
 //
 // export type TasksStateType = {
@@ -28,11 +34,11 @@
 //     const [todoLists, dispatchToTodoLists] = useReducer(todolistsReducer, [
 //         {
 //             id: todoListID_1, title: 'What to learn', filter: 'All', addedDate: '',
-//             order: 1
+//             order: 1, entityStatus: 'idle'
 //         },
 //         {
 //             id: todoListID_2, title: 'What to buy', filter: 'All', addedDate: '',
-//             order: 0
+//             order: 0, entityStatus: 'idle'
 //         }
 //     ]);
 //
@@ -123,11 +129,11 @@
 //     }
 //
 //     function changeTaskStatus(taskId: string, status: TaskStatuses, todoListID: string) {
-//         dispatchToTasks(changeTaskStatusAC(taskId, status, todoListID))
+//         dispatchToTasks(updateTaskAC(taskId, {status}, todoListID))
 //     }
 //
 //     function changeTaskTitle(taskId: string, title: string, todoListID: string) {
-//         dispatchToTasks(changeTaskTitleAC(taskId, title, todoListID))
+//         dispatchToTasks(updateTaskAC(taskId, {title}, todoListID))
 //     }
 //
 //     function changeTodoListFilter(newFilterValue: FilterValuesType, todoListID: string) {
@@ -141,10 +147,10 @@
 //
 //     function addTodoList(title: string) {
 //         let action = addTodolistAC({
-//          id: v1(),
-//          title,
-//          addedDate:'',
-//          order: 0,
+//             id: v1(),
+//             title,
+//             addedDate: '',
+//             order: 0,
 //         });
 //         dispatchToTasks(action);
 //         dispatchToTodoLists(action);
@@ -170,7 +176,8 @@
 //                         changeTaskStatus={changeTaskStatus}
 //                         removeTodoList={removeTodoList}
 //                         changeTaskTitle={changeTaskTitle}
-//                         changeTodoListTitle={changeTodoListTitle}/>
+//                         changeTodoListTitle={changeTodoListTitle}
+//                         entityStatus={tl.entityStatus}/>
 //                 </Paper>
 //             </Grid>
 //         )

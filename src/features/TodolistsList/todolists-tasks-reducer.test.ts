@@ -5,9 +5,14 @@ import {addTodolistAC, TodolistDomainType, todolistsReducer} from './todolists-r
 test('ids should be equals', () => {
     const startTasksState: TasksStateType = {};
     const startTodolistsState: Array<TodolistDomainType> = [];
-    const todolistId = '4135-2525v2-dsfxb24-dfb'
 
-    const action = addTodolistAC("new todolist", todolistId);
+
+    const action = addTodolistAC({
+        id:'1',
+        order: 0,
+        addedDate:'',
+        title: 'new todo'
+    });
 
     const endTasksState = tasksReducer(startTasksState, action)//{'qwqe-qwrq': []}
     const endTodolistsState = todolistsReducer(startTodolistsState, action)//[{id: 'qwqe-qwrq', title: 'new todolist', filter: 'all'}]
@@ -16,6 +21,6 @@ test('ids should be equals', () => {
     const idFromTasks = keys[0];
     const idFromTodolists = endTodolistsState[0].id;
 
-    expect(idFromTasks).toBe(action.id);
-    expect(idFromTodolists).toBe(action.todolistId);
+    expect(idFromTasks).toBe(action.todolist.id);
+    expect(idFromTodolists).toBe(action.todolist.id);
 });
