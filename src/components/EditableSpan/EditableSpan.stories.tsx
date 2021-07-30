@@ -24,7 +24,12 @@ const Template: Story<EditableSpanPropsType> = (args) => <EditableSpan {...args}
 export const EditableSpanExample = Template.bind({});
 EditableSpanExample.args = {
   changeTitle: action('Value EditableSpan changed'),
-
 };
 
+
+export const EditableSpanDisabledExample = Template.bind({});
+EditableSpanExample.args = {
+  changeTitle: action('Value EditableSpan changed'),
+  disabled: true
+};
 

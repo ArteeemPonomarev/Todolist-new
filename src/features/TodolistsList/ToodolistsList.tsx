@@ -14,9 +14,16 @@ import {TaskStatuses} from '../../api/todolist-api';
 import {Grid, Paper} from '@material-ui/core';
 import {TodoList} from './Todolist/TodoList';
 
+type TodolistsPropsType = {
+    demo?: boolean
+}
 
-export const TodolistsList = () => {
+
+export const TodolistsList:React.FC<TodolistsPropsType> = ({demo = false, ...props}) => {
     useEffect(() => {
+        if (demo) {
+            return
+        }
         dispatch(fetchTodolistsTC());
     }, [])
 
@@ -63,10 +70,7 @@ export const TodolistsList = () => {
                 <Paper elevation={6} style={{padding: '0 15px 15px 15px'}}>
                     <TodoList
                         key={tl.id}
-                        id={tl.id}
-                        title={tl.title}
-                        entityStatus={tl.entityStatus}
-                        todoListFilter={tl.filter}
+                        todolist={tl}
                         tasks={tasks[tl.id]}
                         changeFilterValue={changeTodoListFilter}
                         removeTask={removeTask}
@@ -74,7 +78,8 @@ export const TodolistsList = () => {
                         changeTaskStatus={changeTaskStatus}
                         removeTodoList={removeTodoList}
                         changeTaskTitle={changeTaskTitle}
-                        changeTodoListTitle={changeTodoListTitle}/>
+                        changeTodoListTitle={changeTodoListTitle}
+                        demo={demo}/>
                 </Paper>
             </Grid>
         )

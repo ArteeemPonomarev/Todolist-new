@@ -11,8 +11,11 @@ import {AppRootStateType} from './store';
 import {RequestStatusType} from './app-reducer';
 import {ErrorSnackbar} from '../components/ErrorSnackBar/ErrorSnackBar';
 
+type AppPropsType = {
+    demo?: boolean
+}
 
-function App() {
+const App:React.FC<AppPropsType> = ({demo = false, ...props}) => {
 
     const dispatch = useDispatch();
 
@@ -41,7 +44,7 @@ function App() {
                 <Grid container style={{padding: '20px 0px'}}>
                     <AddItemForm addItem={addTodoList}/>
                 </Grid>
-                <TodolistsList/>
+                <TodolistsList demo={demo}/>
             </Container>
         </div>
     );
