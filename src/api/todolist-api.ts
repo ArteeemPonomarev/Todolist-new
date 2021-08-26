@@ -36,6 +36,18 @@ export const todoApi = {
     }
  }
 
+export const authApi = {
+    login (data: LoginParamsType) {
+        return instance.post<ResponseType<{userId: number}>>(`auth/login`, data)
+    },
+    autMe () {
+        return instance.get<ResponseType<AuthMeResponseData>>(`auth/me`)
+    },
+    logout() {
+        return instance.delete<ResponseType>(`auth/login`)
+    }
+}
+
  // types
 export type TodolistType = {
     id: string
@@ -86,4 +98,16 @@ type GetTasksResponse = {
     error: string | null
     totalCount: number
     items: TaskType[]
+}
+
+export type LoginParamsType = {
+    email: string
+    password: string
+    rememberMe: boolean
+    captcha?: string
+}
+export type AuthMeResponseData = {
+    id: number
+    email: string
+    login: string
 }

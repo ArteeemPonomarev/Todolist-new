@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect} from 'react';
 import {
-    changeTodoListFilterAC,
+    changeTodoListFilterAC, createTodolistTC,
     deleteTodolistTC,
     fetchTodolistsTC,
     FilterValuesType,
@@ -13,24 +13,29 @@ import {createTaskTC, removeTaskTC, TasksStateType, updateTaskTC} from './tasks-
 import {TaskStatuses} from '../../api/todolist-api';
 import {Grid, Paper} from '@material-ui/core';
 import {TodoList} from './Todolist/TodoList';
+import {AddItemForm} from "../../components/AddItemForm/AddItemForm";
+import {Redirect} from "react-router-dom";
 
 type TodolistsPropsType = {
     demo?: boolean
 }
 
 
-export const TodolistsList:React.FC<TodolistsPropsType> = ({demo = false, ...props}) => {
+export const TodolistsList: React.FC<TodolistsPropsType> = ({demo = false, ...props}) => {
     useEffect(() => {
-        if (demo) {
+        if (demo || !isLoggedIn) {
             return
         }
         dispatch(fetchTodolistsTC());
     }, [])
 
-    const todoLists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolists)
-    const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
+    const todoLists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolists);
+    const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks);
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn);
+
 
     const dispatch = useDispatch();
+
 
     //For tasks
     const removeTask = useCallback((taskID: string, todoListID: string) => {
@@ -51,6 +56,10 @@ export const TodolistsList:React.FC<TodolistsPropsType> = ({demo = false, ...pro
 
 
     // For todolists
+    const addTodoList = useCallback((title: string) => {
+        dispatch(createTodolistTC(title));
+    }, [dispatch])
+
     const removeTodoList = useCallback((todoListID: string) => {
         dispatch(deleteTodolistTC(todoListID))
     }, [dispatch])
@@ -85,9 +94,20 @@ export const TodolistsList:React.FC<TodolistsPropsType> = ({demo = false, ...pro
         )
     })
 
+
+
+    if (!isLoggedIn) {
+        return <Redirect to={'/login'}/>
+    }
+
     return (
-        <Grid container style={{padding: '20px 0px'}} spacing={3}>
-            {todolistComponents}
-        </Grid>
+        <>
+            <Grid container style={{padding: '20px 0px'}}>
+                <AddItemForm addItem={addTodoList}/>
+            </Grid>
+            <Grid container style={{padding: '20px 0px'}} spacing={3}>
+                {todolistComponents}
+            </Grid>
+        </>
     )
 }

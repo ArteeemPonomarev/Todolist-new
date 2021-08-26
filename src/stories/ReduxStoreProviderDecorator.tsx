@@ -8,14 +8,16 @@ import {todolistsReducer} from '../features/TodolistsList/todolists-reducer';
 import {TaskPriorities, TaskStatuses} from '../api/todolist-api';
 import {appReducer} from '../app/app-reducer';
 import thunk from "redux-thunk";
+import {authReducer} from "../features/Login/authReducer";
 
 const rootReducer = combineReducers({
     tasks: tasksReducer,
     todolists: todolistsReducer,
-    app: appReducer
+    app: appReducer,
+    auth: authReducer
 })
 
- const initialGlobalState = {
+const initialGlobalState = {
     todolists: [
         {
             id: 'todolistId1', title: 'What to learn', filter: 'All', addedDate: '',
@@ -80,9 +82,11 @@ const rootReducer = combineReducers({
             }
         ]
     },
-    app: {status: 'idle', error: null}
+    app: {status: 'idle', error: null},
+    isInitialized: false,
+    isLoggedIn: false
 };
-
+//@ts-ignore
 export const storyBookStore = createStore(rootReducer, initialGlobalState as AppRootStateType, applyMiddleware(thunk));
 
 
