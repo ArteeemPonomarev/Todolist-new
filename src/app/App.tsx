@@ -12,6 +12,7 @@ import {NavLink, Redirect, Route, Switch} from "react-router-dom";
 import {Login} from "../features/Login/Login";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import {logOutTC} from "../features/Login/authReducer";
+import { useCallback } from 'react';
 
 type AppPropsType = {
     demo?: boolean
@@ -29,9 +30,9 @@ const App: React.FC<AppPropsType> = ({demo = false, ...props}) => {
     const isInitialized = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized);
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn);
 
-    const logoutHandler = () => {
+    const logoutHandler = useCallback(() => {
         dispatch(logOutTC())
-    }
+    }, [dispatch])
 
     if (!isInitialized) {
         return <div

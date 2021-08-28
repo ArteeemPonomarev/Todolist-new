@@ -70,7 +70,7 @@ export const TodolistsList: React.FC<TodolistsPropsType> = ({demo = false, ...pr
     }, [dispatch])
 
     const changeTodoListFilter = useCallback((newFilterValue: FilterValuesType, todoListID: string) => {
-        dispatch(changeTodoListFilterAC(todoListID, newFilterValue))
+        dispatch(changeTodoListFilterAC({todoListID, newFilterValue}))
     }, [dispatch])
 
     const todolistComponents = todoLists.map(tl => {
