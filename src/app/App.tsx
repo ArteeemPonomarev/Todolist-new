@@ -12,7 +12,7 @@ import {NavLink, Redirect, Route, Switch} from "react-router-dom";
 import {Login} from "../features/Login/Login";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import {logOutTC} from "../features/Login/authReducer";
-import { useCallback } from 'react';
+import {useCallback} from 'react';
 
 type AppPropsType = {
     demo?: boolean
@@ -21,7 +21,9 @@ type AppPropsType = {
 const App: React.FC<AppPropsType> = ({demo = false, ...props}) => {
 
     useEffect(() => {
-        dispatch(initializeApp())
+        if (!demo) {
+            dispatch(initializeApp())
+        }
     }, []);
 
 

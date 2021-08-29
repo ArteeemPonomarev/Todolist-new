@@ -1,31 +1,41 @@
 import React from 'react';
 import {Provider} from 'react-redux';
-import {AppRootStateType} from '../app/store';
+import {AppRootStateType, RootReducerType} from '../app/store';
 import {v1} from 'uuid';
-import {applyMiddleware, combineReducers, createStore} from 'redux';
+import {combineReducers} from 'redux';
 import {tasksReducer} from '../features/TodolistsList/tasks-reducer';
 import {todolistsReducer} from '../features/TodolistsList/todolists-reducer';
 import {TaskPriorities, TaskStatuses} from '../api/todolist-api';
 import {appReducer} from '../app/app-reducer';
 import thunk from "redux-thunk";
 import {authReducer} from "../features/Login/authReducer";
+import {HashRouter} from "react-router-dom";
+import {configureStore} from '@reduxjs/toolkit';
 
-const rootReducer = combineReducers({
+const rootReducer: RootReducerType = combineReducers({
     tasks: tasksReducer,
     todolists: todolistsReducer,
     app: appReducer,
     auth: authReducer
 })
 
-const initialGlobalState = {
+const initialGlobalState: AppRootStateType = {
     todolists: [
         {
-            id: 'todolistId1', title: 'What to learn', filter: 'All', addedDate: '',
-            order: 1, entityStatus: 'idle'
+            id: 'todolistId1',
+            title: 'What to learn',
+            filter: 'All',
+            addedDate: '',
+            order: 1,
+            entityStatus: 'idle',
         },
         {
-            id: 'todolistId2', title: 'What to buy', filter: 'All', addedDate: '',
-            order: 0, entityStatus: 'loading'
+            id: 'todolistId2',
+            title: 'What to buy',
+            filter: 'All',
+            addedDate: '',
+            order: 0,
+            entityStatus: 'loading',
         }
     ],
     tasks: {
@@ -40,7 +50,7 @@ const initialGlobalState = {
                 addedDate: '',
                 order: 1,
                 description: '',
-                priority: TaskPriorities.Low
+                priority: TaskPriorities.Low,
             },
             {
                 id: v1(),
@@ -52,7 +62,7 @@ const initialGlobalState = {
                 addedDate: '',
                 order: 0,
                 description: '',
-                priority: TaskPriorities.Low
+                priority: TaskPriorities.Low,
             }
         ],
         ['todolistId2']: [
@@ -66,7 +76,7 @@ const initialGlobalState = {
                 addedDate: '',
                 order: 1,
                 description: '',
-                priority: TaskPriorities.Low
+                priority: TaskPriorities.Low,
             },
             {
                 id: v1(),
@@ -78,18 +88,33 @@ const initialGlobalState = {
                 addedDate: '',
                 order: 1,
                 description: '',
-                priority: TaskPriorities.Low
-            }
+                priority: TaskPriorities.Low,
+            },
         ]
     },
-    app: {status: 'idle', error: null},
-    isInitialized: false,
-    isLoggedIn: false
+    app: {
+        status: 'succeeded',
+        isInitialized: true,
+        error: null,
+    },
+    auth: {
+        isLoggedIn: true,
+    },
 };
-//@ts-ignore
-export const storyBookStore = createStore(rootReducer, initialGlobalState as AppRootStateType, applyMiddleware(thunk));
+
+
+export const storyBookStore = configureStore({
+    reducer: rootReducer,
+    preloadedState: initialGlobalState,
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().prepend(thunk),
+});
 
 
 export const ReduxStoreProviderDecorator = (storyFn: () => React.ReactNode) => {
-    return <Provider store={storyBookStore}>{storyFn()}</Provider>
+    return (
+        <Provider store={storyBookStore}>
+            <HashRouter>
+                {storyFn()}
+            </HashRouter>
+        </Provider>)
 }
