@@ -2,8 +2,10 @@ import React, {KeyboardEvent, ChangeEvent, useState} from 'react';
 import {IconButton, TextField} from '@material-ui/core';
 import {AddBox} from '@material-ui/icons';
 
+export type AddItemFormSubmitHelperType = { setError: (error: string) => void, setTitle: (title: string) => void}
+
 export type AddItemFormPropsType = {
-    addItem: (title: string) => void
+    addItem: (title: string, helper: AddItemFormSubmitHelperType) => void
     disabled?: boolean
 }
 
@@ -16,7 +18,7 @@ export const AddItemForm:React.FC<AddItemFormPropsType> = React.memo(({addItem, 
     const addItemHandler = () => {
         const trimmedTitle = title.trim()
         if (trimmedTitle) {
-            addItem(trimmedTitle);
+            addItem(trimmedTitle, {setError, setTitle});
         } else {
             setError('Title is required!')
         }

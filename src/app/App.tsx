@@ -2,17 +2,18 @@ import React, {useEffect} from 'react';
 import './App.css';
 import {AppBar, Button, Container, IconButton, Toolbar, Typography} from '@material-ui/core';
 import {Menu} from '@material-ui/icons';
-import {useDispatch, useSelector} from 'react-redux';
-import {TodolistsList} from '../features/TodolistsList/ToodolistsList';
+import {useSelector} from 'react-redux';
+import {TodolistsList} from '../features/TodolistsList';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import {AppRootStateType} from './store';
-import {initializeApp, RequestStatusType} from './app-reducer';
 import {ErrorSnackbar} from '../components/ErrorSnackBar/ErrorSnackBar';
 import {NavLink, Redirect, Route, Switch} from "react-router-dom";
-import {Login} from "../features/Login/Login";
+import {Login} from "../features/Auth";
 import CircularProgress from '@material-ui/core/CircularProgress';
-import {logOutTC} from "../features/Login/authReducer";
 import {useCallback} from 'react';
+import {selectIsInitialized, selectStatus} from "../features/Application/selectors";
+import {authActions, authSelectors} from "../features/Auth";
+import {appActions} from "../features/Application";
+import {useActions} from "../utils/redux-utils";
 
 type AppPropsType = {
     demo?: boolean
@@ -20,21 +21,24 @@ type AppPropsType = {
 
 const App: React.FC<AppPropsType> = ({demo = false, ...props}) => {
 
+    const status = useSelector(selectStatus);
+    const isInitialized = useSelector(selectIsInitialized);
+    const isLoggedIn = useSelector(authSelectors.selectIsLoggedIn);
+
+    const {logout} = useActions(authActions)
+    const {initializeApp} = useActions(appActions)
+
     useEffect(() => {
         if (!demo) {
-            dispatch(initializeApp())
+            initializeApp()
         }
     }, []);
 
 
-    const dispatch = useDispatch();
-    const status = useSelector<AppRootStateType, RequestStatusType>((state) => state.app.status);
-    const isInitialized = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized);
-    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn);
 
     const logoutHandler = useCallback(() => {
-        dispatch(logOutTC())
-    }, [dispatch])
+        logout()
+    }, [])
 
     if (!isInitialized) {
         return <div

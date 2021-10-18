@@ -8,7 +8,7 @@ import {
 } from './todolists-reducer';
 import {v1} from 'uuid';
 import {TodolistType} from "../../api/todolist-api";
-import {RequestStatusType} from "../../app/app-reducer";
+import {RequestStatusType} from "../Application/app-reducer";
 
 
 let todolistId1: string;
