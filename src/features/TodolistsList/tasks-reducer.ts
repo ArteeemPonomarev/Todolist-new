@@ -1,9 +1,9 @@
 import {TaskPriorities, TaskStatuses, TaskType, UpdateTaskModelType} from '../../api/types';
 import {handleAsyncServerAppError, handleAsyncServerNetworkError,} from "../../utils/error-utils";
-import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {AppRootStateType, ThunkError} from '../../utils/types';
 import {appActions} from "../CommonActions/App";
-import { todoApi } from '../../api/todolist-api';
+import {todoApi} from '../../api/todolist-api';
 import {asyncActions as asyncTodolistsActions} from './todolists-reducer'
 
 

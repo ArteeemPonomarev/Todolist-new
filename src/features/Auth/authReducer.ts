@@ -69,7 +69,6 @@ export const authReducer = slice.reducer;
 export const {setIsLoggedIn} = slice.actions;
 
 
-
 // thunks
 
 // export const _loginTC = (data: LoginParamsType) => async (dispatch: Dispatch) => {

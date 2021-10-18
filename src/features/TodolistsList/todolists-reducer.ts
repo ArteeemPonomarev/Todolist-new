@@ -36,7 +36,7 @@ export const deleteTodolistTC = createAsyncThunk<{ id: string }, string, ThunkEr
     }
 })
 
-export const createTodolistTC  = createAsyncThunk<{ todolist: TodolistType }, string, ThunkError>
+export const createTodolistTC = createAsyncThunk<{ todolist: TodolistType }, string, ThunkError>
 ('todolists/createTodolist', async (title, thunkAPI) => {
     thunkAPI.dispatch(setAppStatus({status: 'loading'}))
     try {
@@ -107,8 +107,6 @@ export const slice = createSlice({
             })
     }
 })
-
-
 
 
 export const {changeTodolistFilter, changeTodolistEntityStatus} = slice.actions

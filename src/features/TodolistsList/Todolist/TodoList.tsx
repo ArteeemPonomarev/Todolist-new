@@ -1,14 +1,13 @@
 import React, {useCallback, useEffect} from 'react';
 import {AddItemForm, AddItemFormSubmitHelperType} from '../../../components/AddItemForm/AddItemForm';
 import EditableSpan from '../../../components/EditableSpan/EditableSpan';
-import {Button, IconButton} from '@material-ui/core';
+import {Button, IconButton, PropTypes} from '@material-ui/core';
 import {Delete} from '@material-ui/icons';
 import {Task} from './Task/Task';
 import {TaskStatuses, TaskType} from '../../../api/types';
-import {FilterValuesType, TodolistDomainType, updateTodolistTitleTC} from '../todolists-reducer';
+import {FilterValuesType, TodolistDomainType} from '../todolists-reducer';
 import {tasksActions, todolistsActions} from "../index";
 import {useActions, useAppDispatch} from "../../../utils/redux-utils";
-import { PropTypes } from '@material-ui/core';
 
 
 type TodoListPropsType = {
@@ -105,7 +104,7 @@ export const TodoList = React.memo(({demo = false, ...props}: TodoListPropsType)
                 }
                 {!getTasksForTodoList().length && <div style={{padding: '10px', color: 'grey'}}>No task</div>}
             </ul>
-            <div style = {{padding: '10px'}}>
+            <div style={{padding: '10px'}}>
                 {renderFilterButton('All', 'default', 'All')}
                 {renderFilterButton('Active', 'primary', 'Active')}
                 {renderFilterButton('Completed', 'secondary', 'Completed')}

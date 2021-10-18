@@ -1,5 +1,5 @@
 import {authApi} from "../../api/todolist-api";
-import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {authActions} from "../Auth";
 import {appActions} from "../CommonActions/App";
 

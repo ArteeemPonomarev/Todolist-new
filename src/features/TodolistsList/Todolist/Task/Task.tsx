@@ -4,7 +4,7 @@ import EditableSpan from '../../../../components/EditableSpan/EditableSpan';
 import {Delete} from '@material-ui/icons';
 import {TaskStatuses, TaskType} from '../../../../api/types';
 import {tasksActions} from "../../index";
-import { useActions } from '../../../../utils/redux-utils';
+import {useActions} from '../../../../utils/redux-utils';
 
 export type TaskPropsType = {
     task: TaskType
@@ -35,7 +35,8 @@ export const Task = React.memo((props: TaskPropsType) => {
 
     return (
         <li key={props.task.id}>
-            <Checkbox checked={props.task.status === TaskStatuses.Completed} onChange={onChangeHandler} color={'primary'}/>
+            <Checkbox checked={props.task.status === TaskStatuses.Completed} onChange={onChangeHandler}
+                      color={'primary'}/>
             <EditableSpan title={props.task.title} changeTitle={onTitleChangeHandler}/>
             <IconButton onClick={onClickHandler}>
                 <Delete/>

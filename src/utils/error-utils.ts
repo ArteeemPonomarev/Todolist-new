@@ -1,5 +1,5 @@
 import {ResponseType} from "../api/types";
-import { appActions } from "../features/CommonActions/App";
+import {appActions} from "../features/CommonActions/App";
 import {AxiosError} from 'axios';
 
 // original type:

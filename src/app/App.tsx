@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import './App.css';
 import {AppBar, Button, Container, IconButton, Toolbar, Typography} from '@material-ui/core';
 import {Menu} from '@material-ui/icons';
@@ -7,11 +7,9 @@ import {TodolistsList} from '../features/TodolistsList';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import {ErrorSnackbar} from '../components/ErrorSnackBar/ErrorSnackBar';
 import {NavLink, Redirect, Route, Switch} from "react-router-dom";
-import {Login} from "../features/Auth";
+import {authActions, authSelectors, Login} from "../features/Auth";
 import CircularProgress from '@material-ui/core/CircularProgress';
-import {useCallback} from 'react';
 import {selectIsInitialized, selectStatus} from "../features/Application/selectors";
-import {authActions, authSelectors} from "../features/Auth";
 import {appActions} from "../features/Application";
 import {useActions} from "../utils/redux-utils";
 
@@ -33,7 +31,6 @@ const App: React.FC<AppPropsType> = ({demo = false, ...props}) => {
             initializeApp()
         }
     }, []);
-
 
 
     const logoutHandler = useCallback(() => {

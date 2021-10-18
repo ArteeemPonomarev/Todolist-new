@@ -1,15 +1,15 @@
-import React, {KeyboardEvent, ChangeEvent, useState} from 'react';
+import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {IconButton, TextField} from '@material-ui/core';
 import {AddBox} from '@material-ui/icons';
 
-export type AddItemFormSubmitHelperType = { setError: (error: string) => void, setTitle: (title: string) => void}
+export type AddItemFormSubmitHelperType = { setError: (error: string) => void, setTitle: (title: string) => void }
 
 export type AddItemFormPropsType = {
     addItem: (title: string, helper: AddItemFormSubmitHelperType) => void
     disabled?: boolean
 }
 
-export const AddItemForm:React.FC<AddItemFormPropsType> = React.memo(({addItem, disabled=false}) => {
+export const AddItemForm: React.FC<AddItemFormPropsType> = React.memo(({addItem, disabled = false}) => {
 
     const [title, setTitle] = useState<string>('');
     const [error, setError] = useState<string | null>(null)

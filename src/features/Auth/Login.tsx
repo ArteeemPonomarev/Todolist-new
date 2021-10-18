@@ -6,7 +6,7 @@ import {Redirect} from "react-router-dom";
 import {selectIsLoggedIn} from "./selectors";
 import {useAppDispatch} from "../../utils/redux-utils";
 import {authActions} from "./index";
-import { login } from './authReducer';
+import {login} from './authReducer';
 
 type FormikErrorType = {
     email?: string
